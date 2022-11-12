@@ -17,12 +17,8 @@ while my_hand == cpu_hand:
     print("YOU:",HAND_TYPES[my_hand-1])
     print("CPU:",HAND_TYPES[cpu_hand-1])
 
-    if my_hand > 1:
-        if my_hand < cpu_hand:
-            print("勝ち！")
-        elif my_hand > cpu_hand:
-            print("負け！")
-    elif cpu_hand == 2:
+
+    if my_hand == cpu_hand-1:
         print("勝ち！")
-    elif cpu_hand == 3:
+    elif my_hand-1 == cpu_hand:
         print("負け！")

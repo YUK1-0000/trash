@@ -1,13 +1,9 @@
-      while True:
-            while True:
-                X = input("X = ")
-                Y = input("Y = ")
-                if X in self.ALLOWED_NUMBERS and Y in self.ALLOWED_NUMBERS:
-                    X, Y = int(X)-1, int(Y)-1
-                    break
-                else:
-                    print("1~8で入力してください。")
-            if self.grid[Y][X] == self.EMPTY:
-                break
-            else:
-                print("入力された座標は既に埋まっています。")
+ if ((self.grid_data[Y+i][X+j] == self.turn*-1 for j in range(-1, 1)) for i in range(-1, 1)):
+                        for i in range(-1, 1):
+                            for j in range(-1, 1):
+                                if self.grid_data[Y+i][X+j] == self.turn*-1:
+                                    for n in range():
+                                        if self.grid_data[Y+i*(n+1)][X+j*(n+1)] != self.turn*-1:
+                                            break
+                                        else:
+                                            self.turn_pieces += 1
