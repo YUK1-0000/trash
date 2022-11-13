@@ -23,8 +23,8 @@ class Board:
                 if self.grid_data[Y][X] != self.EMPTY:
                     print("既に駒があります。")
                     continue
-                for i in range( -1, 1):
-                    for j in range( -1, 1):
+                for i in range(-1, 2):
+                    for j in range(-1, 2):
                         if 0 <= Y+i <= self.edge-1 and 0 <= X+j <= self.edge-1:
                             if self.grid_data[Y+i][X+j] == self.turn*-1:
                                 for n in range(self.edge):

@@ -35,7 +35,14 @@ class Board:
 
     def trial(self) -> bool:
         "ゲーム終了かどうかを返す。"
-        any((self.grid_data[Y+i][X+j] == self.EMPTY for j in range(self.edge)) for i in range(self.edge)) 
+        for i in range(self.edge):
+            for j in range(self.edge):
+                for n in (-1, 1):
+                    if self.grid_data[i][j] == n:
+                        if 0 <= i <= self.edge-1 and 0 <= j <= self.edge-1:
+
+
+
 
 
 
@@ -61,3 +68,5 @@ while True:
                 break
         else:
             print("1 ~", board.edge, "で入力してください。")
+    board.trial()
+        
