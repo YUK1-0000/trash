@@ -1,3 +1,6 @@
+from typing import Any
+
+
 class Board:
     edge = 3
     MARU = 1
@@ -32,6 +35,7 @@ class Board:
 
     def trial(self) -> bool:
         "ゲーム終了かどうかを返す。"
+        any((self.grid_data[Y+i][X+j] == self.EMPTY for j in range(self.edge)) for i in range(self.edge)) 
 
 
 
