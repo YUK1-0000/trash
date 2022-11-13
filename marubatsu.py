@@ -7,7 +7,7 @@ class Board:
     BATSU = -1
     EMPTY = 0
     ALLOWED_NUMBERS = [str(i+1) for i in range(edge)]
-    AXIS = ("0", 1, "2", "3", "4", "5", "6" ,"7", "8", "9")
+    AXIS = ("0", "1", "2", "3", "4", "5", "6" ,"7", "8", "9")
     def __init__(self)  -> None:
         self.grid_data = [[0 for _ in range(self.edge)] for _ in range(self.edge)]
         self.turn = -1
