@@ -75,5 +75,3 @@ board.turn  *=  -1
 while True:
     board.show()
     board.set_()
-
-
