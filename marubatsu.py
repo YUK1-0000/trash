@@ -92,5 +92,4 @@ while True:
                 break
         else:
             print("1 ~", board.edge, "で入力してください。")
-    board.trial()
         
