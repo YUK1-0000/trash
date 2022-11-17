@@ -70,8 +70,10 @@ while BREAK == False:
                                                     count += 1
                                                     if count == board.edge:
                                                         if l == 1:
+                                                            board.show()
                                                             print("o WIN")
                                                         else:
+                                                            board.show()
                                                             print("x WIN")
                                                         BREAK = True
                                                         break
