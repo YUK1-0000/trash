@@ -33,39 +33,6 @@ class Board:
                     print(" ", end = " ")      
             print()
 
-    def trial(self) -> bool:
-        "ゲーム終了かどうかを返す。"
-        for l in (-1, 1):
-            for i in range(self.edge):
-                for j in range(self.edge):
-                    if self.grid_data[i][j] == l:
-                        for n in (-1, 0, 1):
-                            for m in (-1, 0, 1):
-                                if 0 <= i+n <= self.edge-1 and 0 <= j+m <= self.edge-1:
-                                    if self.grid_data[i+n][j+m] == l:
-                                        self.count = 2
-                                        for t in range(self.edge):
-                                            if 0 <= i+n*(t+2) <= self.edge-1 and 0 <= j+m*(t+2) <= self.edge-1:
-                                                if self.grid_data[i+n*(t+2)][j+m*(t+2)] == l:
-                                                    self.count += 1
-                                                    if self.count >= self.edge:
-                                                        if l == 1:
-                                                            print("o WIN")
-                                                        else:
-                                                            print("x WIN")
-                                                        self.BREAK = True
-                                                        break
-                                        if self.BREAK:
-                                            break
-                            if self.BREAK:
-                                break
-                        if self.BREAK:
-                            break
-                if self.BREAK:
-                    break
-            if self.BREAK:
-                break
-
 
 
 
@@ -92,4 +59,35 @@ while True:
                 break
         else:
             print("1 ~", board.edge, "で入力してください。")
+    BREAK = False
+    for l in (-1, 1):
+            for i in range(board.edge):
+                for j in range(board.edge):
+                    if board.grid_data[i][j] == l:
+                        for n in (-1, 0, 1):
+                            for m in (-1, 0, 1):
+                                if 0 <= i+n <= board.edge-1 and 0 <= j+m <= board.edge-1:
+                                    if board.grid_data[i+n][j+m] == l:
+                                        count = 2
+                                        for t in range(board.edge):
+                                            if 0 <= i+n*(t+2) <= board.edge-1 and 0 <= j+m*(t+2) <= board.edge-1:
+                                                if board.grid_data[i+n*(t+2)][j+m*(t+2)] == l:
+                                                    count += 1
+                                                    if count >= board.edge:
+                                                        if l == 1:
+                                                            print("o WIN")
+                                                        else:
+                                                            print("x WIN")
+                                                        BREAK = True
+                                                        break
+                                        if BREAK:
+                                            break
+                            if BREAK:
+                                break
+                        if BREAK:
+                            break
+                if BREAK:
+                    break
+            if BREAK:
+                break
         
