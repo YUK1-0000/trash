@@ -1,6 +1,3 @@
-from typing import Any
-
-
 class Board:
     edge = 3
     MARU = 1
@@ -38,8 +35,8 @@ class Board:
 
 
 board = Board()
-
-while True:
+BREAK = False
+while BREAK == False:
     board.show()
     board.turn *= -1
     if board.turn == 1:
@@ -55,25 +52,23 @@ while True:
                 print("そのマスは空いていません。")
             else:
                 board.set_()
-                print(board.grid_data)
                 break
         else:
             print("1 ~", board.edge, "で入力してください。")
-    BREAK = False
     for l in (-1, 1):
             for i in range(board.edge):
                 for j in range(board.edge):
                     if board.grid_data[i][j] == l:
                         for n in (-1, 0, 1):
                             for m in (-1, 0, 1):
-                                if 0 <= i+n <= board.edge-1 and 0 <= j+m <= board.edge-1:
+                                if 0 <= i+n <= board.edge-1 and 0 <= j+m <= board.edge-1 and n+m != 0:
                                     if board.grid_data[i+n][j+m] == l:
-                                        count = 2
+                                        count = 0
                                         for t in range(board.edge):
-                                            if 0 <= i+n*(t+2) <= board.edge-1 and 0 <= j+m*(t+2) <= board.edge-1:
-                                                if board.grid_data[i+n*(t+2)][j+m*(t+2)] == l:
+                                            if 0 <= i+n*t <= board.edge-1 and 0 <= j+m*t <= board.edge-1:
+                                                if board.grid_data[i+n*t][j+m*t] == l:
                                                     count += 1
-                                                    if count >= board.edge:
+                                                    if count == board.edge:
                                                         if l == 1:
                                                             print("o WIN")
                                                         else:
@@ -90,4 +85,5 @@ while True:
                     break
             if BREAK:
                 break
-        
+    if BREAK:
+        break
