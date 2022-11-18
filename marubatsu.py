@@ -31,6 +31,43 @@ class Board:
             print()
 
 
+    def trial(self):
+        for l in (-1, 1):
+            for i in range(board.edge):
+                for j in range(board.edge):
+                    if board.grid_data[i][j] == l:
+                        for n in (-1, 0, 1):
+                            for m in (-1, 0, 1):
+                                if 0 <= i+n <= board.edge-1 and 0 <= j+m <= board.edge-1 and n+m != 0:
+                                    if board.grid_data[i+n][j+m] == l:
+                                        count = 0
+                                        for t in range(board.edge):
+                                            if 0 <= i+n*t <= board.edge-1 and 0 <= j+m*t <= board.edge-1:
+                                                if board.grid_data[i+n*t][j+m*t] == l:
+                                                    count += 1
+                                                    if count == board.edge:
+                                                        if l == 1:
+                                                            board.show()
+                                                            print("o WIN")
+                                                        else:
+                                                            board.show()
+                                                            print("x WIN")
+                                                        BREAK = True
+                                                        break
+                                        if BREAK:
+                                            break
+                            if BREAK:
+                                break
+                        if BREAK:
+                            break
+                if BREAK:
+                    break
+            if BREAK:
+                break
+    if BREAK:
+        break
+
+
 
 
 
