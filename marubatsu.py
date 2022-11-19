@@ -7,14 +7,12 @@ class Board:
     AXIS = ("0", "1", "2", "3", "4", "5", "6" ,"7", "8", "9")
     def __init__(self)  -> None:
         self.grid_data = [[0 for _ in range(self.edge)] for _ in range(self.edge)]
-        self.turn = -1
+        self.piece = -1
         
     def set_(self)  -> None:
-        "駒を置く。"
-        self.grid_data[Y][X] = self.turn
+        self.grid_data[Y][X] = self.piece
         
     def show(self)  -> None:
-        "ボードを表示します。"
         self.grid = [[0 for _ in range(self.edge)] for _ in range(self.edge)]
         for i in range(self.edge+1):
             print(self.AXIS[i], end = " ")
@@ -29,6 +27,7 @@ class Board:
                 else:
                     print(" ", end = " ")      
             print()
+
         
 
 
@@ -36,10 +35,12 @@ class Board:
 
 board = Board()
 BREAK = False
+turn = 0
 while BREAK == False:
     board.show()
-    board.turn *= -1
-    if board.turn == 1:
+    board.piece *= -1
+    turn += 1
+    if board.piece == 1:
         print("You : o")
     else:
         print("You : x")
@@ -55,42 +56,30 @@ while BREAK == False:
                 break
         else:
             print("1 ~", board.edge, "で入力してください。")
-    empty_count = board.edge**2
-    for i in range(board.edge):
-            for j in range(board.edge):
-                if board.grid_data[j][i] != board.EMPTY:
-                    empty_count -= 1
-                else:
-                    if board.grid_data[i][j] == board.turn:
-                        for n in (-1, 0, 1):
-                            for m in (-1, 0, 1):
-                                if n != 0 and m != 0 and 0 <= i+n <= board.edge-1 and 0 <= j+m <= board.edge-1:
-                                    if board.grid_data[i+n][j+m] == board.turn:
-                                        count = 0
-                                        for t in range(board.edge):
-                                            if 0 <= i+n*t <= board.edge-1 and 0 <= j+m*t <= board.edge-1:
-                                                if board.grid_data[i+n*t][j+m*t] == board.turn:
-                                                    count += 1
-                                                    if count == board.edge:
-                                                        if board.turn == 1:
-                                                            board.show()
-                                                            print("o WIN")
-                                                        else:
-                                                            board.show()
-                                                            print("x WIN")
-                                                        BREAK = True
-                                                        break
-                                        if BREAK:
-                                            break
-                            if BREAK:
-                                break
-                        if BREAK:
-                            break
-            if BREAK:
-                break
+    for n in (-1, 0, 1):
+        for m in (-1, 0, 1):
+            if n != 0 and m != 0 and 0 <= Y+n <= board.edge-1 and 0 <= X+m <= board.edge-1:
+                if board.grid_data[Y+n][X+m] == board.piece:
+                    count = 0
+                    for t in range(board.edge):
+                        if 0 <= Y+n*t <= board.edge-1 and 0 <= X+m*t <= board.edge-1:
+                            if board.grid_data[Y+n*t][X+m*t] == board.piece:
+                                count += 1
+                                if count == board.edge:
+                                    if board.piece == 1:
+                                        board.show()
+                                        print("o WIN")
+                                    else:
+                                        board.show()
+                                        print("x WIN")
+                                    BREAK = True
+                                    break
+                    if BREAK:
+                        break
+        if BREAK:
+            break
     if BREAK:
         break
-    elif empty_count == 0:
-        board.show()
+    if turn == board.edge**2:
         print("DRAW")
         break
