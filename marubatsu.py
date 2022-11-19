@@ -29,47 +29,7 @@ class Board:
                 else:
                     print(" ", end = " ")      
             print()
-
-
-    def trial(self):
-        self.empty_count = 0
-        for l in (-1, 1):
-            for i in range(self.edge):
-                for j in range(self.edge):
-                    if self.grid_data[i][j] == l:
-                        for n in (-1, 0, 1):
-                            for m in (-1, 0, 1):
-                                if 0 <= i+n <= self.edge-1 and 0 <= j+m <= self.edge-1 and n+m != 0:
-                                    if self.grid_data[i+n][j+m] == l:
-                                        count = 0
-                                        for t in range(self.edge):
-                                            if 0 <= i+n*t <= self.edge-1 and 0 <= j+m*t <= self.edge-1:
-                                                if self.grid_data[i+n*t][j+m*t] == l:
-                                                    count += 1
-                                                    if count == self.edge:
-                                                        if l == 1:
-                                                            self.show()
-                                                            print("o WIN")
-                                                        else:
-                                                            self.show()
-                                                            print("x WIN")
-                                                        BREAK = True
-                                                        break
-                                        if BREAK:
-                                            break
-                            if BREAK:
-                                break
-                        if BREAK:
-                            break
-                    elif self.grid_data == self.EMPTY:
-                        self.empty_count += 1
-                if BREAK:
-                    break
-            if BREAK:
-                break
-    if BREAK:
-        break
-
+        
 
 
 
@@ -95,22 +55,24 @@ while BREAK == False:
                 break
         else:
             print("1 ~", board.edge, "で入力してください。")
-    empty_count = 0
-    for l in (-1, 1):
-            for i in range(board.edge):
-                for j in range(board.edge):
-                    if board.grid_data[i][j] == l:
+    empty_count = board.edge**2
+    for i in range(board.edge):
+            for j in range(board.edge):
+                if board.grid_data[j][i] != board.EMPTY:
+                    empty_count -= 1
+                else:
+                    if board.grid_data[i][j] == board.turn:
                         for n in (-1, 0, 1):
                             for m in (-1, 0, 1):
-                                if 0 <= i+n <= board.edge-1 and 0 <= j+m <= board.edge-1 and n+m != 0:
-                                    if board.grid_data[i+n][j+m] == l:
+                                if n != 0 and m != 0 and 0 <= i+n <= board.edge-1 and 0 <= j+m <= board.edge-1:
+                                    if board.grid_data[i+n][j+m] == board.turn:
                                         count = 0
                                         for t in range(board.edge):
                                             if 0 <= i+n*t <= board.edge-1 and 0 <= j+m*t <= board.edge-1:
-                                                if board.grid_data[i+n*t][j+m*t] == l:
+                                                if board.grid_data[i+n*t][j+m*t] == board.turn:
                                                     count += 1
                                                     if count == board.edge:
-                                                        if l == 1:
+                                                        if board.turn == 1:
                                                             board.show()
                                                             print("o WIN")
                                                         else:
@@ -124,14 +86,11 @@ while BREAK == False:
                                 break
                         if BREAK:
                             break
-                    elif board.grid_data == board.EMPTY:
-                        empty_count += 1
-                if BREAK:
-                    break
             if BREAK:
                 break
     if BREAK:
         break
-    elif empty_count > 0:
+    elif empty_count == 0:
+        board.show()
         print("DRAW")
         break
