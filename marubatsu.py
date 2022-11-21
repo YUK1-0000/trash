@@ -13,19 +13,19 @@ class Board:
 
     def input_(self):
         while True:
-            X = input("X = ")
-            Y = input("Y = ")
-            if X in board.ALLOWED_NUMBERS and Y in board.ALLOWED_NUMBERS:
-                X, Y = int(X)-1, int(Y)-1
-                if board.grid_data[Y][X] != board.EMPTY:
+            x = input("x = ")
+            y = input("y = ")
+            if x in board.ALLOWED_NUMBERS and y in board.ALLOWED_NUMBERS:
+                x, y = int(x)-1, int(y)-1
+                if board.grid_data[y][x] != board.EMPTY:
                     print("そのマスは空いていません。")
                 else:
                     break
             else:
                 print("1 ~", board.EDGE, "で入力してください。")        
 
-    def set_(self, X, Y):
-        self.grid_data[Y][X] = self.piece
+    def set_(self, x, y):
+        self.grid_data[y][x] = self.piece
         
     def show(self):
         self.grid = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
@@ -58,18 +58,18 @@ while BREAK == False:
     print("\nYou :", board.PIECE[board.piece])
 
     while True:
-        X = input("X = ")
-        Y = input("Y = ")
-        if X in board.ALLOWED_NUMBERS and Y in board.ALLOWED_NUMBERS:
-            X, Y = int(X)-1, int(Y)-1
-            if board.grid_data[Y][X] != board.EMPTY:
+        x = input("X = ")
+        y = input("Y = ")
+        if x in board.ALLOWED_NUMBERS and y in board.ALLOWED_NUMBERS:
+            x, y = int(x)-1, int(y)-1
+            if board.grid_data[y][x] != board.EMPTY:
                 print("そのマスは空いていません。")
             else:
                 break
         else:
             print("1 ~", board.EDGE, "で入力してください。")
 
-    board.set_(X, Y)
+    board.set_(x, y)
 
     for i in range(board.EDGE):
         for j in range(board.EDGE):

@@ -21,7 +21,7 @@ class Board:
                 else:
                     break
             else:
-                print("1 ~", board.EDGE, "で入力してください。")        
+                print("1 ~", board.EDGE, "で入力してください。")   
 
     def set_(self, X, Y):
         self.grid_data[Y][X] = self.piece
