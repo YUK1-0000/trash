@@ -1,13 +1,13 @@
 class Board:
-    edge = 3
+    EDGE = 3
     PIECE = ("", "o", "x")
     MARU = 1
     BATSU = -1
     EMPTY = 0
-    ALLOWED_NUMBERS = [str(i+1) for i in range(edge)]
+    ALLOWED_NUMBERS = [str(i+1) for i in range(EDGE)]
     AXIS = ("0", "1", "2", "3", "4", "5", "6" ,"7", "8", "9")
     def __init__(self):
-        self.grid_data = [[0 for _ in range(self.edge)] for _ in range(self.edge)]
+        self.grid_data = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
         self.piece = -1
 
     def input_(self):
@@ -21,19 +21,19 @@ class Board:
                 else:
                     break
             else:
-                print("1 ~", board.edge, "で入力してください。")        
+                print("1 ~", board.EDGE, "で入力してください。")        
 
     def set_(self, X, Y):
         self.grid_data[Y][X] = self.piece
         
     def show(self):
-        self.grid = [[0 for _ in range(self.edge)] for _ in range(self.edge)]
-        for i in range(self.edge+1):
+        self.grid = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
+        for i in range(self.EDGE+1):
             print(self.AXIS[i], end = " ")
         print()
-        for i in range(self.edge):
+        for i in range(self.EDGE):
             print(self.AXIS[i+1], end = " ")
-            for j in range(self.edge):
+            for j in range(self.EDGE):
                 if self.grid_data[i][j] == self.BATSU:
                     print("x", end = " ")
                 elif self.grid_data[i][j] == self.MARU:
@@ -43,25 +43,25 @@ class Board:
             print()
 
     def trial(self):
-        for i in range(self.edge):
-            for j in range(self.edge):
+        for i in range(self.EDGE):
+            for j in range(self.EDGE):
                 if self.grid_data[i][j] == self.piece:
                     for n in (-1, 0, 1):
                         for m in (-1, 0, 1):
-                            if (n != 0 or m != 0) and (0 <= i+n <= self.edge-1 and 0 <= j+m <= self.edge-1):
+                            if (n != 0 or m != 0) and (0 <= i+n <= self.EDGE-1 and 0 <= j+m <= self.EDGE-1):
                                 if self.grid_data[i+n][j+m] == self.piece:
                                     count = 1
-                                    for t in range(self.edge):
-                                        if 0 <= i+n*(t+1) <= self.edge-1 and 0 <= j+m*(t+1) <= self.edge-1:
+                                    for t in range(self.EDGE):
+                                        if 0 <= i+n*(t+1) <= self.EDGE-1 and 0 <= j+m*(t+1) <= self.EDGE-1:
                                             if self.grid_data[i+n*(t+1)][j+m*(t+1)] == self.piece:
                                                 count += 1
                                                 if BREAK:
                                                     break
-                                                elif count == self.edge:
+                                                elif count == self.EDGE:
                                                     self.show()
                                                     print("\n", self.PIECE[self.piece], "WIN")
                                                     BREAK = True
-                                                elif turn == self.edge**2:
+                                                elif turn == self.EDGE**2:
                                                     self.show()
                                                     print("\nDRAW")
                                                     BREAK = True
@@ -87,7 +87,7 @@ while BREAK == False:
             else:
                 break
         else:
-            print("1 ~", board.edge, "で入力してください。")
+            print("1 ~", board.EDGE, "で入力してください。")
 
     board.set_(X, Y)
     board.trial()
