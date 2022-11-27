@@ -7,26 +7,34 @@ class Board:
     EMPTY = 0
     ALLOWED_NUMBERS = [str(i+1) for i in range(EDGE)]
     AXIS = ("0", "1", "2", "3", "4", "5", "6" ,"7", "8", "9")
+
+
     def __init__(self):
         self.grid_data = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
         self.piece = -1
 
+
     def input_(self):
         while True:
+            self.show()
+            print("\nYou :", self.PIECE[self.piece], "\n\n1 ~", self.EDGE, "で入力してください。")
             x = input("X = ")
             y = input("Y = ")
-            if x in board.ALLOWED_NUMBERS and y in board.ALLOWED_NUMBERS:
+            if x in self.ALLOWED_NUMBERS and y in self.ALLOWED_NUMBERS:
                 x, y = int(x)-1, int(y)-1
-                if board.grid_data[y][x] != board.EMPTY:
+                if self.grid_data[y][x] != self.EMPTY:
                     print("そのマスは空いていません。")
                 else:
-                    break
+                    return x, y
             else:
-                print("1 ~", board.EDGE, "で入力してください。")
+                print("1 ~", self.EDGE, "で入力してください。")
+
 
     def set_(self, x, y):
+        print(x, y)
         self.grid_data[y][x] = self.piece
-        
+
+
     def show(self):
         self.grid = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
         for i in range(self.EDGE+1):
@@ -42,6 +50,7 @@ class Board:
                 else:
                     print(" ", end = " ")      
             print()
+
 
     def trial(self):
         BREAK = False
@@ -77,20 +86,6 @@ turn = 0
 while not board.trial():
     board.piece *= -1
     turn += 1
-
-    while True:
-        board.show()
-        print("\nYou :", board.PIECE[board.piece])
-        x = input("\nX = ")
-        y = input("Y = ")
-        if x in board.ALLOWED_NUMBERS and y in board.ALLOWED_NUMBERS:
-            x, y = int(x)-1, int(y)-1
-            if board.grid_data[y][x] != board.EMPTY:
-                print("そのマスは空いていません。")
-            else:
-                break
-        else:
-            print("1 ~", board.EDGE, "で入力してください。")
-
+    x, y = board.input_()
     board.set_(x, y)
     board.trial()
