@@ -1,6 +1,6 @@
 class Board:
-    EDGE = 3
-    WIN_REACH = 3
+    EDGE = 8
+    WIN_REACH = 4
     PIECE = ("", "o", "x")
     MARU = 1
     BATSU = -1
