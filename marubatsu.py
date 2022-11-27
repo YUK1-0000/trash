@@ -1,6 +1,6 @@
 class Board:
-    EDGE = 8
-    WIN_REACH = 4
+    EDGE = 3
+    WIN_REACH = 3
     PIECE = ("", "o", "x")
     MARU = 1
     BATSU = -1
@@ -17,7 +17,7 @@ class Board:
     def input_(self):
         while True:
             self.show()
-            print("\nYou :", self.PIECE[self.piece], "\n\n1 ~", self.EDGE, "で入力してください。")
+            print("\nYou :", self.PIECE[self.piece], "\n1 ~", self.EDGE, "で入力してください。")
             x = input("X = ")
             y = input("Y = ")
             if x in self.ALLOWED_NUMBERS and y in self.ALLOWED_NUMBERS:
