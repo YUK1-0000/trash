@@ -56,7 +56,6 @@ class Board:
         for i in range(self.EDGE):
             for j in range(self.EDGE):
                 if self.grid_data[i][j] == self.piece:
-                    print(i, j)
                     return i, j
 
 
@@ -65,14 +64,14 @@ class Board:
             for m in (-1, 0, 1):
                 if (n != 0 or m != 0) and (0 <= i+n <= self.EDGE-1 and 0 <= j+m <= self.EDGE-1):
                     if self.grid_data[i+n][j+m] == self.piece:
-                        return n, m
+                        return j+m, i+n
 
 
-    def trial(self, i, j, n, m):
+    def trial(self, x, y):
         count = 1
         for t in range(self.EDGE):
-            if 0 <= i+n*(t+1) <= self.EDGE-1 and 0 <= j+m*(t+1) <= self.EDGE-1:
-                if self.grid_data[i+n*(t+1)][j+m*(t+1)] == self.piece:
+            if 0 <= y*(t+1) <= self.EDGE-1 and 0 <= x*(t+1) <= self.EDGE-1:
+                if self.grid_data[y*(t+1)][x*(t+1)] == self.piece:
                     count += 1
                     if count == self.WIN_REACH:
                         self.show()
@@ -90,10 +89,10 @@ turn = 0
 while True:
     board.piece *= -1
     turn += 1
-    x, y = board.input()
-    board.set(x, y)
+    X, Y = board.input()
+    board.set(X, Y)
     while True:
-        i, j = board.board_check()
-        n, m = board.arround_check(i, j)
-        if board.trial(i, j, n, m):
+        x, y = board.board_check()
+        x, y = board.arround_check(x, y)
+        if board.trial(x, y):
             break
