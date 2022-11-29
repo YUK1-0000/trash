@@ -52,6 +52,20 @@ class Board:
             print()
 
 
+    def grid_check(self):
+        for i in range(board.EDGE):
+            for j in range(board.EDGE):
+                if board.grid_data[i][j] == board.piece:
+                    return i, j
+
+
+    def arround_check(self, i, j):
+        for n in (-1, 0, 1):
+            for m in (-1, 0, 1):
+                if (n != 0 or m != 0) and (0 <= i+n <= board.EDGE-1 and 0 <= j+m <= board.EDGE-1):
+                    if board.grid_data[i+n][j+m] == board.piece:
+
+
     def trial(self):
         BREAK = False
         for i in range(board.EDGE):
