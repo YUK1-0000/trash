@@ -14,7 +14,7 @@ class Board:
         self.piece = -1
 
 
-    def input_(self):
+    def input(self):
         while True:
             self.show()
             print("\nYou :", self.PIECE[self.piece], "\n1 ~", self.EDGE, "で入力してください。")
@@ -30,7 +30,7 @@ class Board:
                 print("1 ~", self.EDGE, "で入力してください。")
 
 
-    def set_(self, x, y):
+    def set(self, x, y):
         print(x, y)
         self.grid_data[y][x] = self.piece
 
@@ -52,54 +52,48 @@ class Board:
             print()
 
 
-    def grid_check(self):
-        for i in range(board.EDGE):
-            for j in range(board.EDGE):
-                if board.grid_data[i][j] == board.piece:
+    def board_check(self):
+        for i in range(self.EDGE):
+            for j in range(self.EDGE):
+                if self.grid_data[i][j] == self.piece:
+                    print(i, j)
                     return i, j
 
 
     def arround_check(self, i, j):
         for n in (-1, 0, 1):
             for m in (-1, 0, 1):
-                if (n != 0 or m != 0) and (0 <= i+n <= board.EDGE-1 and 0 <= j+m <= board.EDGE-1):
-                    if board.grid_data[i+n][j+m] == board.piece:
+                if (n != 0 or m != 0) and (0 <= i+n <= self.EDGE-1 and 0 <= j+m <= self.EDGE-1):
+                    if self.grid_data[i+n][j+m] == self.piece:
+                        return n, m
 
 
-    def trial(self):
-        BREAK = False
-        for i in range(board.EDGE):
-            for j in range(board.EDGE):
-                if board.grid_data[i][j] == board.piece:
-                    for n in (-1, 0, 1):
-                        for m in (-1, 0, 1):
-                            if (n != 0 or m != 0) and (0 <= i+n <= board.EDGE-1 and 0 <= j+m <= board.EDGE-1):
-                                if board.grid_data[i+n][j+m] == board.piece:
-                                    count = 1
-                                    for t in range(board.EDGE):
-                                        if 0 <= i+n*(t+1) <= board.EDGE-1 and 0 <= j+m*(t+1) <= board.EDGE-1:
-                                            if board.grid_data[i+n*(t+1)][j+m*(t+1)] == board.piece:
-                                                count += 1
-                                                if BREAK:
-                                                    break
-                                                elif count == board.WIN_REACH:
-                                                    board.show()
-                                                    print("\n" + board.PIECE[board.piece], "WIN")
-                                                    BREAK = True
-                                                    return True
-                                                elif turn == board.EDGE**2:
-                                                    board.show()
-                                                    print("\nDRAW")
-                                                    BREAK = True
-                                                    return True
+    def trial(self, i, j, n, m):
+        count = 1
+        for t in range(self.EDGE):
+            if 0 <= i+n*(t+1) <= self.EDGE-1 and 0 <= j+m*(t+1) <= self.EDGE-1:
+                if self.grid_data[i+n*(t+1)][j+m*(t+1)] == self.piece:
+                    count += 1
+                    if count == self.WIN_REACH:
+                        self.show()
+                        print("\n" + self.PIECE[self.piece], "WIN")
+                        return True
+                    elif turn == self.EDGE**2:
+                        self.show()
+                        print("\nDRAW")
+                        return True
 
 
 
 board = Board()
 turn = 0
-while not board.trial():
+while True:
     board.piece *= -1
     turn += 1
-    x, y = board.input_()
-    board.set_(x, y)
-    board.trial()
+    x, y = board.input()
+    board.set(x, y)
+    while True:
+        i, j = board.board_check()
+        n, m = board.arround_check(i, j)
+        if board.trial(i, j, n, m):
+            break
