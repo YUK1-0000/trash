@@ -54,27 +54,27 @@ class Board:
 
     def trial(self):
         BREAK = False
-        for i in range(board.EDGE):
-            for j in range(board.EDGE):
-                if board.grid_data[i][j] == board.piece:
+        for i in range(self.EDGE):
+            for j in range(self.EDGE):
+                if self.grid_data[i][j] == self.piece:
                     for n in (-1, 0, 1):
                         for m in (-1, 0, 1):
-                            if (n != 0 or m != 0) and (0 <= i+n <= board.EDGE-1 and 0 <= j+m <= board.EDGE-1):
-                                if board.grid_data[i+n][j+m] == board.piece:
+                            if (n != 0 or m != 0) and (0 <= i+n <= self.EDGE-1 and 0 <= j+m <= self.EDGE-1):
+                                if self.grid_data[i+n][j+m] == self.piece:
                                     count = 1
-                                    for t in range(board.EDGE):
-                                        if 0 <= i+n*(t+1) <= board.EDGE-1 and 0 <= j+m*(t+1) <= board.EDGE-1:
-                                            if board.grid_data[i+n*(t+1)][j+m*(t+1)] == board.piece:
+                                    for t in range(self.EDGE):
+                                        if 0 <= i+n*(t+1) <= self.EDGE-1 and 0 <= j+m*(t+1) <= self.EDGE-1:
+                                            if self.grid_data[i+n*(t+1)][j+m*(t+1)] == self.piece:
                                                 count += 1
                                                 if BREAK:
                                                     break
-                                                elif count == board.WIN_REACH:
-                                                    board.show()
-                                                    print("\n" + board.PIECE[board.piece], "WIN")
+                                                elif count == self.WIN_REACH:
+                                                    self.show()
+                                                    print("\n" + self.PIECE[self.piece], "WIN")
                                                     BREAK = True
                                                     return True
-                                                elif turn == board.EDGE**2:
-                                                    board.show()
+                                                elif turn == self.EDGE**2:
+                                                    self.show()
                                                     print("\nDRAW")
                                                     BREAK = True
                                                     return True

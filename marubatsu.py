@@ -14,7 +14,7 @@ class Board:
         self.piece = -1
 
 
-    def input(self):
+    def input_(self):
         while True:
             self.show()
             print("\nYou :", self.PIECE[self.piece], "\n1 ~", self.EDGE, "で入力してください。")
@@ -30,7 +30,7 @@ class Board:
                 print("1 ~", self.EDGE, "で入力してください。")
 
 
-    def set(self, x, y):
+    def set_(self, x, y):
         print(x, y)
         self.grid_data[y][x] = self.piece
 
@@ -51,27 +51,23 @@ class Board:
                     print(" ", end = " ")      
             print()
 
-
-    def board_check(self):
-        for i in range(self.EDGE):
-            for j in range(self.EDGE):
-                if self.grid_data[i][j] == self.piece:
-                    return i, j
+    
+    def grid_check(self, i, j):
+        if self.grid_data[i][j] == self.piece:
+            return True
 
 
-    def arround_check(self, i, j):
-        for n in (-1, 0, 1):
-            for m in (-1, 0, 1):
-                if (n != 0 or m != 0) and (0 <= i+n <= self.EDGE-1 and 0 <= j+m <= self.EDGE-1):
-                    if self.grid_data[i+n][j+m] == self.piece:
-                        return j+m, i+n
+    def arround_check(self, i, j, n, m):
+        if (n != 0 or m != 0) and (0 <= i+n <= self.EDGE-1 and 0 <= j+m <= self.EDGE-1):
+            if self.grid_data[i+n][j+m] == self.piece:
+                return True
 
 
-    def trial(self, x, y):
+    def trial(self, i, j, n, m):
         count = 1
         for t in range(self.EDGE):
-            if 0 <= y*(t+1) <= self.EDGE-1 and 0 <= x*(t+1) <= self.EDGE-1:
-                if self.grid_data[y*(t+1)][x*(t+1)] == self.piece:
+            if 0 <= i+n*(t+1) <= self.EDGE-1 and 0 <= j+m*(t+1) <= self.EDGE-1:
+                if self.grid_data[i+n*(t+1)][j+m*(t+1)] == self.piece:
                     count += 1
                     if count == self.WIN_REACH:
                         self.show()
@@ -83,16 +79,23 @@ class Board:
                         return True
 
 
+    def check(self):
+        for i in range(self.EDGE):
+            for j in range(self.EDGE):
+                if self.grid_check(i, j):
+                    for n in (-1, 0, 1):
+                        for m in (-1, 0, 1):
+                            if self.arround_check(i, j, n, m):
+                                if self.trial(i, j, n, m):
+                                    return True
+
 
 board = Board()
 turn = 0
 while True:
     board.piece *= -1
     turn += 1
-    X, Y = board.input()
-    board.set(X, Y)
-    while True:
-        x, y = board.board_check()
-        x, y = board.arround_check(x, y)
-        if board.trial(x, y):
-            break
+    x, y = board.input_()
+    board.set_(x, y)
+    if board.check():
+        break
