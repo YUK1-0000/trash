@@ -63,7 +63,7 @@ class Board:
                 return True
 
 
-    def trial(self, i, j, n, m):
+    def count(self, i, j, n, m):
         count = 1
         for t in range(self.EDGE):
             if 0 <= i+n*(t+1) <= self.EDGE-1 and 0 <= j+m*(t+1) <= self.EDGE-1:
@@ -79,14 +79,14 @@ class Board:
                         return True
 
 
-    def check(self):
+    def trial(self):
         for i in range(self.EDGE):
             for j in range(self.EDGE):
                 if self.grid_check(i, j):
                     for n in (-1, 0, 1):
                         for m in (-1, 0, 1):
                             if self.arround_check(i, j, n, m):
-                                if self.trial(i, j, n, m):
+                                if self.count(i, j, n, m):
                                     return True
 
 
@@ -97,5 +97,5 @@ while True:
     turn += 1
     x, y = board.input_()
     board.set_(x, y)
-    if board.check():
+    if board.trial():
         break
