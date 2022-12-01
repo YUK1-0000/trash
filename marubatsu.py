@@ -1,7 +1,7 @@
 class Board:
     EDGE = 3
     WIN_REACH = 3
-    PIECE = ("", "o", "x")
+    PIECE = (" ", "o", "x")
     MARU = 1
     BATSU = -1
     EMPTY = 0
@@ -19,6 +19,11 @@ class Board:
             self.show()
             print("\nYou :", self.PIECE[self.piece], "\n1 ~", self.EDGE, "で入力してください。")
             x = input("X = ")
+            if x in self.ALLOWED_NUMBERS:
+                x = int(x)-1
+                if self.grid_data[y][x] != self.EMPTY:
+                    print("そのマスは空いていません。")
+
             y = input("Y = ")
             if x in self.ALLOWED_NUMBERS and y in self.ALLOWED_NUMBERS:
                 x, y = int(x)-1, int(y)-1
@@ -43,12 +48,7 @@ class Board:
         for i in range(self.EDGE):
             print(self.AXIS[i+1], end = " ")
             for j in range(self.EDGE):
-                if self.grid_data[i][j] == self.BATSU:
-                    print("x", end = " ")
-                elif self.grid_data[i][j] == self.MARU:
-                    print("o", end = " ")
-                else:
-                    print(" ", end = " ")      
+                print(self.PIECE[self.grid_data[i][j]], end = " ")
             print()
 
     
