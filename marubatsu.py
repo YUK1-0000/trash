@@ -75,7 +75,7 @@ class Board:
             return True
 
 
-    def arround_check(self, i, j, n, m):
+    def around_check(self, i, j, n, m):
         if (n != 0 or m != 0) and (0 <= i+n <= self.EDGE-1 and 0 <= j+m <= self.EDGE-1):
             if self.grid_data[i+n][j+m] == self.piece:
                 return True
@@ -103,7 +103,7 @@ class Board:
                 if self.grid_check(i, j):
                     for n in (-1, 0, 1):
                         for m in (-1, 0, 1):
-                            if self.arround_check(i, j, n, m):
+                            if self.around_check(i, j, n, m):
                                 if self.result(i, j, n, m):
                                     return True
 
