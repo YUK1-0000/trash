@@ -17,6 +17,7 @@ class Board:
     def input(self):
         re = False
         emp = True
+
         while True:
             self.show()
             if re:
@@ -36,12 +37,14 @@ class Board:
             else:
                 re = True
                 continue
+
             y = input("Y = ")
             if y in self.ALLOWED_NUMBERS:
                 y = int(y)-1
             else:
                 re = True
                 continue
+            
             if self.grid_data[y][x] != self.EMPTY:
                 emp = False
                 continue
