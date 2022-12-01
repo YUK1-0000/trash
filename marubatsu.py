@@ -6,7 +6,7 @@ class Board:
     BATSU = -1
     EMPTY = 0
     ALLOWED_NUMBERS = [str(i+1) for i in range(EDGE)]
-    AXIS = ("0", "1", "2", "3", "4", "5", "6" ,"7", "8", "9")
+    AXIS = [i for i in range(10)]
 
 
     def __init__(self):
