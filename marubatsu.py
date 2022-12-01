@@ -18,13 +18,7 @@ class Board:
         while True:
             self.show()
             print("\nYou :", self.PIECE[self.piece], "\n1 ~", self.EDGE, "で入力してください。")
-            x = input("X = ")
-            if x in self.ALLOWED_NUMBERS:
-                x = int(x)-1
-                if self.grid_data[y][x] != self.EMPTY:
-                    print("そのマスは空いていません。")
-
-            y = input("Y = ")
+            x, y = input("X = "), input("Y = ")
             if x in self.ALLOWED_NUMBERS and y in self.ALLOWED_NUMBERS:
                 x, y = int(x)-1, int(y)-1
                 if self.grid_data[y][x] != self.EMPTY:
@@ -36,7 +30,6 @@ class Board:
 
 
     def set_(self, x, y):
-        print(x, y)
         self.grid_data[y][x] = self.piece
 
 
@@ -73,10 +66,10 @@ class Board:
                         self.show()
                         print("\n" + self.PIECE[self.piece], "WIN")
                         return True
-                    elif turn == self.EDGE**2:
-                        self.show()
-                        print("\nDRAW")
-                        return True
+        if turn == self.EDGE**2:
+            self.show()
+            print("\nDRAW")
+            return True
 
 
     def trial(self):

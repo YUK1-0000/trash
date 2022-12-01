@@ -1,11 +1,6 @@
-def a(a):
-    if a == 1:
-        print(a)
-        return 1, 2
+x = 0
+y = 0
 
-b = 1
+x, y = input(), input()
 
-if a(b):
-    print("o")
-elif not a(b):
-    print("x")
+print(x, y)
