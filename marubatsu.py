@@ -81,7 +81,7 @@ class Board:
                 return True
 
 
-    def count(self, i, j, n, m):
+    def result(self, i, j, n, m):
         count = 1
         for t in range(self.EDGE):
             if 0 <= i+n*(t+1) <= self.EDGE-1 and 0 <= j+m*(t+1) <= self.EDGE-1:
@@ -104,7 +104,7 @@ class Board:
                     for n in (-1, 0, 1):
                         for m in (-1, 0, 1):
                             if self.arround_check(i, j, n, m):
-                                if self.count(i, j, n, m):
+                                if self.result(i, j, n, m):
                                     return True
 
 
