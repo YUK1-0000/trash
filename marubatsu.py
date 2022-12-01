@@ -15,23 +15,36 @@ class Board:
 
 
     def input(self):
+        re = False
+        emp = True
         while True:
             self.show()
-            print("\nYou :", self.PIECE[self.piece])
+            if re:
+                print("1 ~", self.EDGE, "で入力してください。")
+            elif not emp:
+                print("そのマスは空いていません。")
+            else:
+                print()
+            print("You :", self.PIECE[self.piece])
+
+            re = False
+            emp = True
+
             x = input("X = ")
             if x in self.ALLOWED_NUMBERS:
                 x = int(x)-1
             else:
-                print("1 ~", self.EDGE, "で入力してください。")
+                re = True
                 continue
             y = input("Y = ")
             if y in self.ALLOWED_NUMBERS:
                 y = int(y)-1
             else:
-                print("1 ~", self.EDGE, "で入力してください。")
+                re = True
                 continue
             if self.grid_data[y][x] != self.EMPTY:
-                print("そのマスは空いていません。")
+                emp = False
+                continue
             else:
                 return x, y
             
@@ -42,6 +55,7 @@ class Board:
 
 
     def show(self):
+        print()
         self.grid = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
         for i in range(self.EDGE+1):
             print(self.AXIS[i], end = " ")
@@ -96,6 +110,7 @@ turn = 0
 while True:
     board.piece *= -1
     turn += 1
+
     x, y = board.input()
     board.set(x, y)
     if board.trial():
