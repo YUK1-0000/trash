@@ -62,14 +62,6 @@ class Board:
 
 class TUIBoard(Board):
 
-
-    def input_coordinate(self, type_: str) -> int:
-        while True:
-            x = input(f"{type_} = ")
-            if x in self.ALLOWED_NUMBERS:
-                return int(x)-1
-
-
     def input_(self):
         re = False
         emp = True
@@ -87,37 +79,36 @@ class TUIBoard(Board):
             re = False
             emp = True
 
-            x, y = (self.input_coordinate(c) for c in "XY")
+            x = input("X = ")
+            if x in self.ALLOWED_NUMBERS:
+                x = int(x)-1
+            else:
+                re = True
+                continue
 
-
+            y = input("Y = ")
+            if y in self.ALLOWED_NUMBERS:
+                y = int(y)-1
+            else:
+                re = True
+                continue
+            
             if self.grid_data[y][x] != self.EMPTY:
                 emp = False
                 continue
             else:
                 return x, y
 
-    def show(self):
-        print()
-        self.grid = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
-        for i in range(self.EDGE+1):
-            print(self.AXIS[i], end = " ")
-        print()
-        for i in range(self.EDGE):
-            print(self.AXIS[i+1], end = " ")
-            for j in range(self.EDGE):
-                print(self.PIECE[self.grid_data[i][j]], end = " ")
-            print()
-
 
         
-board = Board()
+board = TUIBoard()
 turn = 0
 while True:
     board.piece *= -1
     turn += 1
 
-    x, y = board.input()
-    board.set(x, y)
+    x, y = board.input_()
+    board.set_(x, y)
     if board.trial():
         break
 
