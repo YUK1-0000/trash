@@ -14,7 +14,18 @@ class Board:
         self.piece = -1
 
             
-
+    def show(self):
+        print()
+        self.grid = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
+        for i in range(self.EDGE+1):
+            print(self.AXIS[i], end = " ")
+        print()
+        for i in range(self.EDGE):
+            print(self.AXIS[i+1], end = " ")
+            for j in range(self.EDGE):
+                print(self.PIECE[self.grid_data[i][j]], end = " ")
+            print()
+            
 
     def set_(self, x, y):
         self.grid_data[y][x] = self.piece
