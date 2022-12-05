@@ -46,7 +46,8 @@ class Board:
                         count = 1
                         for n in range(self.EDGE):
                             if 0 <= y+i*(n+1) < self.EDGE and 0 <= x+j*(n+1) < self.EDGE:
-                                if self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece*-1:
+                                if self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.EMPTY:
+                                elif self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece*-1:
                                     count += 1
                                     # print(f"1  y {1+y+i*(n+1)}  x {1+x+j*(n+1)}")
                                 elif self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece:
