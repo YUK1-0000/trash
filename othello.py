@@ -54,7 +54,24 @@ class Board:
                                         # print(f"2  y {1+y+i*(m+1)}  x {1+x+j*(m+1)}")
                                         self.grid_data[y+i*(m+1)][x+j*(m+1)] = self.piece
 
-                                    
+
+    def trun_check(self):
+        for y in range(self.EDGE):
+            for x in range(self.EDGE):
+                if self.grid_data[y][x] == self.EMPTY:
+                    for i in (-1, 0, 1):
+                        for j in (-1, 0, 1):
+                            if 0 <= y+i < self.EDGE and 0 <= x+j < self.EDGE:
+                                if self.grid_data[y+i][x+j] == self.piece*-1:
+                                    count = 1
+                                    for n in range(self.EDGE):
+                                        if 0 <= y+i*(n+1) < self.EDGE and 0 <= x+j*(n+1) < self.EDGE:
+                                            if self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece*-1:
+                                                count += 1
+                                            elif self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece:
+                                                return True
+
+
     def piece_count(self):
         white_count = 0
         black_count = 0
@@ -147,7 +164,12 @@ class TUIBoard(Board):
             else:
                 return x, y
 
-    
+    def skip(self):
+        self.show()
+        print("エンターでパス。")
+        input()
+
+
     def result(self):
         self.show()
         print(f"\n")
@@ -160,8 +182,11 @@ while True:
     board.piece *= -1
     turn += 1
 
-    x, y = board.input_()
-    board.set_(x, y)
-    board.trun(x, y)
+    if board.trun_check():
+        x, y = board.input_()
+        board.set_(x, y)
+        board.trun(x, y)
+    else:
+        board.skip()
     if turn == board.EDGE**2-4 or board.piece_count():
         break
