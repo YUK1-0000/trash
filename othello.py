@@ -54,6 +54,19 @@ class Board:
                                         # print(f"2  y {1+y+i*(m+1)}  x {1+x+j*(m+1)}")
                                         self.grid_data[y+i*(m+1)][x+j*(m+1)] = self.piece
 
+                                    
+    def piece_count(self):
+        white_count = 0
+        black_count = 0
+        for i in range(self.EDGE):
+            for j in range(self.EDGE):
+                if self.grid_data[i][j] == self.WHITE:
+                    white_count += 1
+                elif self.grid_data[i][j] == self.BLACK:
+                    black_count += 1
+        if not (white_count and black_count):
+            return True
+
 
 '''
     def grid_check(self, i, j):
@@ -134,6 +147,11 @@ class TUIBoard(Board):
             else:
                 return x, y
 
+    
+    def result(self):
+        self.show()
+        print(f"\n")
+
 
         
 board = TUIBoard()
@@ -145,5 +163,5 @@ while True:
     x, y = board.input_()
     board.set_(x, y)
     board.trun(x, y)
-    turn == board.
-
+    if turn == board.EDGE**2-4 or board.piece_count():
+        break
