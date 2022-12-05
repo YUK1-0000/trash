@@ -31,8 +31,16 @@ class Board:
         self.grid_data[y][x] = self.piece
 
 
+    def.trial(self, x, y):
+        for i in (-1, 0, 1):
+            for j in (-1, 0, 1):
+                if 0 <= y+i < self.EDGE and 0 <= x+j < self.EDGE:
+                    if self.grid_data[y+i][x+j] == self.piece *-1:
 
-    
+                        for n in range(self.EDGE):
+                            for m in range(self.EDGE):
+                            
+    '''
     def grid_check(self, i, j):
         if self.grid_data[i][j] == self.piece:
             return True
@@ -69,6 +77,7 @@ class Board:
                             if self.around_check(i, j, n, m):
                                 if self.result(i, j, n, m):
                                     return True
+    '''
 
 
 class TUIBoard(Board):
@@ -120,6 +129,5 @@ while True:
 
     x, y = board.input_()
     board.set_(x, y)
-    if board.trial():
-        break
+    board.trial(x, y)
 
