@@ -11,6 +11,12 @@ class Board:
 
     def __init__(self):
         self.grid_data = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
+        for y in (3, 4):
+            for x in (3, 4):
+                if y == x:
+                    self.grid_data[y][x] = self.WHITE
+                else:
+                    self.grid_data[y][x] = self.BLACK
         self.piece = -1
 
             
@@ -31,14 +37,19 @@ class Board:
         self.grid_data[y][x] = self.piece
 
 
-    def.trial(self, x, y):
+    def trun(self, x, y):
         for i in (-1, 0, 1):
             for j in (-1, 0, 1):
                 if 0 <= y+i < self.EDGE and 0 <= x+j < self.EDGE:
-                    if self.grid_data[y+i][x+j] == self.piece *-1:
-
+                    if self.grid_data[y+i][x+j] == self.piece*-1:
+                        count = 1
                         for n in range(self.EDGE):
-                            for m in range(self.EDGE):
+                            if 0 <= y+i*(n+1) < self.EDGE and 0 <= x+j*(n+1) < self.EDGE:
+                                if self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece*-1:
+                                    count += 1
+                                elif self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece:
+                                    for m in range(count):
+                                        self.grid_data[y+i*(m+1)][x+j*(n+1)] == self.piece
                             
     '''
     def grid_check(self, i, j):
@@ -129,5 +140,6 @@ while True:
 
     x, y = board.input_()
     board.set_(x, y)
-    board.trial(x, y)
+    board.trun(x, y)
+    
 
