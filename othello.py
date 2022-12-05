@@ -53,7 +53,8 @@ class Board:
                                     for m in range(count):
                                         # print(f"2  y {1+y+i*(m+1)}  x {1+x+j*(m+1)}")
                                         self.grid_data[y+i*(m+1)][x+j*(m+1)] = self.piece
-                            
+
+
 '''
     def grid_check(self, i, j):
         if self.grid_data[i][j] == self.piece:
@@ -144,5 +145,5 @@ while True:
     x, y = board.input_()
     board.set_(x, y)
     board.trun(x, y)
-    
+    turn == board.
 
