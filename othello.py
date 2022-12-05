@@ -42,16 +42,19 @@ class Board:
             for j in (-1, 0, 1):
                 if 0 <= y+i < self.EDGE and 0 <= x+j < self.EDGE:
                     if self.grid_data[y+i][x+j] == self.piece*-1:
+                        # print(f"o  y {1+y+i}  x {1+x+j}")
                         count = 1
                         for n in range(self.EDGE):
                             if 0 <= y+i*(n+1) < self.EDGE and 0 <= x+j*(n+1) < self.EDGE:
                                 if self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece*-1:
                                     count += 1
+                                    # print(f"1  y {1+y+i*(n+1)}  x {1+x+j*(n+1)}")
                                 elif self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece:
                                     for m in range(count):
-                                        self.grid_data[y+i*(m+1)][x+j*(n+1)] == self.piece
+                                        # print(f"2  y {1+y+i*(m+1)}  x {1+x+j*(m+1)}")
+                                        self.grid_data[y+i*(m+1)][x+j*(m+1)] = self.piece
                             
-    '''
+'''
     def grid_check(self, i, j):
         if self.grid_data[i][j] == self.piece:
             return True
@@ -88,7 +91,7 @@ class Board:
                             if self.around_check(i, j, n, m):
                                 if self.result(i, j, n, m):
                                     return True
-    '''
+'''
 
 
 class TUIBoard(Board):
