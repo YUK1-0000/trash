@@ -1,7 +1,7 @@
 class Board:
     EDGE = 8
     WIN_REACH = 3
-    PIECE = (" ", "○", "●")
+    PIECE = ("+", "○", "●")
     WHITE = 1
     BLACK = -1
     EMPTY = 0
@@ -11,12 +11,8 @@ class Board:
 
     def __init__(self):
         self.grid_data = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
-        for y in (3, 4):
-            for x in (3, 4):
-                if y == x:
-                    self.grid_data[y][x] = self.WHITE
-                else:
-                    self.grid_data[y][x] = self.BLACK
+        self.grid_data[3][3], self.grid_data[4][4] = self.BLACK, self.BLACK
+        self.grid_data[4][3], self.grid_data[3][4] = self.WHITE, self.WHITE
         self.piece = -1
 
             
@@ -47,6 +43,7 @@ class Board:
                         for n in range(self.EDGE):
                             if 0 <= y+i*(n+1) < self.EDGE and 0 <= x+j*(n+1) < self.EDGE:
                                 if self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.EMPTY:
+                                    break
                                 elif self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece*-1:
                                     count += 1
                                     # print(f"1  y {1+y+i*(n+1)}  x {1+x+j*(n+1)}")
@@ -54,6 +51,7 @@ class Board:
                                     for m in range(count):
                                         # print(f"2  y {1+y+i*(m+1)}  x {1+x+j*(m+1)}")
                                         self.grid_data[y+i*(m+1)][x+j*(m+1)] = self.piece
+                                    break
 
 
     def trun_check(self):
@@ -74,15 +72,19 @@ class Board:
 
 
     def piece_count(self):
+        piece_count = 0
         white_count = 0
         black_count = 0
         for i in range(self.EDGE):
             for j in range(self.EDGE):
-                if self.grid_data[i][j] == self.WHITE:
-                    white_count += 1
-                elif self.grid_data[i][j] == self.BLACK:
-                    black_count += 1
-        if not (white_count and black_count):
+                match self.grid_data[i][j]:
+                    case 1:
+                        piece_count += 1
+                        white_count += 1
+                    case -1:
+                        piece_count += 1
+                        black_count += 1
+        if not (white_count and black_count) or (piece_count == self.EDGE**2):
             return True
 
 
@@ -189,5 +191,5 @@ while True:
         board.trun(x, y)
     else:
         board.skip()
-    if turn == board.EDGE**2-4 or board.piece_count():
+    if board.piece_count():
         break
