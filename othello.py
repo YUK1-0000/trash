@@ -41,7 +41,6 @@ class Board:
             for j in (-1, 0, 1):
                 if 0 <= y+i < self.EDGE and 0 <= x+j < self.EDGE:
                     if self.grid_data[y+i][x+j] == self.piece*-1:
-                        # print(f"o  y {1+y+i}  x {1+x+j}")
                         count = 1
                         for n in range(self.EDGE):
                             if 0 <= y+i*(n+1) < self.EDGE and 0 <= x+j*(n+1) < self.EDGE:
@@ -49,10 +48,8 @@ class Board:
                                     break
                                 elif self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece*-1:
                                     count += 1
-                                    # print(f"1  y {1+y+i*(n+1)}  x {1+x+j*(n+1)}")
                                 elif self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece:
                                     for m in range(count):
-                                        # print(f"2  y {1+y+i*(m+1)}  x {1+x+j*(m+1)}")
                                         self.grid_data[y+i*(m+1)][x+j*(m+1)] = self.piece
                                     break
 
@@ -118,7 +115,7 @@ class TUIBoard(Board):
                 print("返せる駒がありません。")
             else:
                 print()
-            print("You :", self.PIECE[self.piece])
+            print(f"{self.PIECE[self.piece]} の番です。")
 
             re = False
 
@@ -151,7 +148,7 @@ class TUIBoard(Board):
     def pass_(self):
         self.show()
         print("エンターでパス。")
-        print("You :", self.PIECE[self.piece])
+        print(f"{self.PIECE[self.piece]} の番です。")
         input()
 
 
