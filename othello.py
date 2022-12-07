@@ -1,12 +1,12 @@
 class Board:
     EDGE = 8
     WIN_REACH = 3
-    PIECE = ("+", "○", "●")
+    PIECE = ("-", "○", "●")
     WHITE = 1
     BLACK = -1
     EMPTY = 0
     ALLOWED_NUMBERS = [str(i+1) for i in range(EDGE)]
-    AXIS = [i for i in range(10)]
+    AXIS = [" "] + [i+1 for i in range(10)]
 
 
     def __init__(self):
@@ -17,11 +17,14 @@ class Board:
 
             
     def show(self):
+
         print()
         self.grid = [[0 for _ in range(self.EDGE)] for _ in range(self.EDGE)]
+
         for i in range(self.EDGE+1):
             print(self.AXIS[i], end = " ")
         print()
+
         for i in range(self.EDGE):
             print(self.AXIS[i+1], end = " ")
             for j in range(self.EDGE):
@@ -33,7 +36,7 @@ class Board:
         self.grid_data[y][x] = self.piece
 
 
-    def trun(self, x, y):
+    def turn(self, x, y):
         for i in (-1, 0, 1):
             for j in (-1, 0, 1):
                 if 0 <= y+i < self.EDGE and 0 <= x+j < self.EDGE:
@@ -54,21 +57,26 @@ class Board:
                                     break
 
 
-    def trun_check(self):
+    def turn_check(self, x, y):
+        if self.grid_data[y][x] == self.EMPTY:
+            for i in (-1, 0, 1):
+                for j in (-1, 0, 1):
+                    if 0 <= y+i < self.EDGE and 0 <= x+j < self.EDGE:
+                        if self.grid_data[y+i][x+j] == self.piece*-1:
+                            count = 1
+                            for n in range(self.EDGE):
+                                if 0 <= y+i*(n+1) < self.EDGE and 0 <= x+j*(n+1) < self.EDGE:
+                                    if self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece*-1:
+                                        count += 1
+                                    elif self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece:
+                                        return True
+
+
+    def turn_check_all(self):
         for y in range(self.EDGE):
             for x in range(self.EDGE):
-                if self.grid_data[y][x] == self.EMPTY:
-                    for i in (-1, 0, 1):
-                        for j in (-1, 0, 1):
-                            if 0 <= y+i < self.EDGE and 0 <= x+j < self.EDGE:
-                                if self.grid_data[y+i][x+j] == self.piece*-1:
-                                    count = 1
-                                    for n in range(self.EDGE):
-                                        if 0 <= y+i*(n+1) < self.EDGE and 0 <= x+j*(n+1) < self.EDGE:
-                                            if self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece*-1:
-                                                count += 1
-                                            elif self.grid_data[y+i*(n+1)][x+j*(n+1)] == self.piece:
-                                                return True
+                if self.turn_check(x, y):
+                    return True
 
 
     def piece_count(self):
@@ -88,48 +96,7 @@ class Board:
                         piece_count += 1
                         black_count += 1
 
-        if not (white_count and black_count) or (piece_count == self.EDGE**2):
-            return True
-
-
-'''
-    def grid_check(self, i, j):
-        if self.grid_data[i][j] == self.piece:
-            return True
-
-
-    def around_check(self, i, j, n, m):
-        if (n != 0 or m != 0) and (0 <= i+n <= self.EDGE-1 and 0 <= j+m <= self.EDGE-1):
-            if self.grid_data[i+n][j+m] == self.piece:
-                return True
-
-
-    def result(self, i, j, n, m):
-        count = 1
-        for t in range(self.EDGE):
-            if 0 <= i+n*(t+1) <= self.EDGE-1 and 0 <= j+m*(t+1) <= self.EDGE-1:
-                if self.grid_data[i+n*(t+1)][j+m*(t+1)] == self.piece:
-                    count += 1
-                    if count == self.WIN_REACH:
-                        self.show()
-                        print("\n" + self.PIECE[self.piece], "WIN")
-                        return True
-        if turn == self.EDGE**2:
-            self.show()
-            print("\nDRAW")
-            return True
-
-
-    def trial(self):
-        for i in range(self.EDGE):
-            for j in range(self.EDGE):
-                if self.grid_check(i, j):
-                    for n in (-1, 0, 1):
-                        for m in (-1, 0, 1):
-                            if self.around_check(i, j, n, m):
-                                if self.result(i, j, n, m):
-                                    return True
-'''
+        return piece_count, white_count, black_count
 
 
 class TUIBoard(Board):
@@ -138,20 +105,22 @@ class TUIBoard(Board):
 
         re = False
         emp = True
+        turn = True
 
         while True:
 
             self.show()
             if re:
-                print("1 ~", self.EDGE, "で入力してください。")
+                print(f"{self.AXIS[1]} ~ {self.AXIS[self.EDGE]}で入力してください。")
             elif not emp:
                 print("そのマスは空いていません。")
+            elif not turn:
+                print("返せる駒がありません。")
             else:
                 print()
             print("You :", self.PIECE[self.piece])
 
             re = False
-            emp = True
 
             x = input("X = ")
             if x in self.ALLOWED_NUMBERS:
@@ -167,8 +136,14 @@ class TUIBoard(Board):
                 re = True
                 continue
             
+            emp = True
+            turn = True
+
             if self.grid_data[y][x] != self.EMPTY:
                 emp = False
+                continue
+            elif not self.turn_check(x, y):
+                turn = False
                 continue
             else:
                 return x, y
@@ -176,26 +151,31 @@ class TUIBoard(Board):
     def pass_(self):
         self.show()
         print("エンターでパス。")
+        print("You :", self.PIECE[self.piece])
         input()
 
 
     def result(self):
         self.show()
-        print(f"\n")
+        print(f"\n{board.PIECE[board.WHITE]}{white_count} {board.PIECE[board.BLACK]}{black_count}")
 
 
         
 board = TUIBoard()
 turn = 0
 while True:
-    board.piece *= -1
+    
     turn += 1
 
-    if board.trun_check():
+    if board.turn_check_all():
         x, y = board.input_()
         board.set_(x, y)
-        board.trun(x, y)
+        board.turn(x, y)
     else:
         board.pass_()
-    if board.piece_count():
+
+    piece_count, white_count, black_count = board.piece_count()
+    if not (white_count and black_count) or (piece_count == board.EDGE**2):
         break
+
+board.result()

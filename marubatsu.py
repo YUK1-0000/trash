@@ -122,4 +122,3 @@ while True:
     board.set_(x, y)
     if board.trial():
         break
-
