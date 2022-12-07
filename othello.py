@@ -72,11 +72,14 @@ class Board:
 
 
     def piece_count(self):
+
         piece_count = 0
         white_count = 0
         black_count = 0
+
         for i in range(self.EDGE):
             for j in range(self.EDGE):
+
                 match self.grid_data[i][j]:
                     case 1:
                         piece_count += 1
@@ -84,6 +87,7 @@ class Board:
                     case -1:
                         piece_count += 1
                         black_count += 1
+
         if not (white_count and black_count) or (piece_count == self.EDGE**2):
             return True
 
@@ -131,10 +135,12 @@ class Board:
 class TUIBoard(Board):
 
     def input_(self):
+
         re = False
         emp = True
 
         while True:
+
             self.show()
             if re:
                 print("1 ~", self.EDGE, "で入力してください。")
@@ -167,7 +173,7 @@ class TUIBoard(Board):
             else:
                 return x, y
 
-    def skip(self):
+    def pass_(self):
         self.show()
         print("エンターでパス。")
         input()
@@ -190,6 +196,6 @@ while True:
         board.set_(x, y)
         board.trun(x, y)
     else:
-        board.skip()
+        board.pass_()
     if board.piece_count():
         break
