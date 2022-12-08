@@ -110,7 +110,7 @@ class TUIBoard(Board):
             if re:
                 print(f"{self.AXIS[1]} ~ {self.AXIS[self.EDGE]}で入力してください。")
             elif not emp:
-                print("そのマスは空いていません。")
+                print("空いていません。")
             elif not turn:
                 print("返せる駒がありません。")
             else:
@@ -163,7 +163,8 @@ turn = 0
 while True:
     
     turn += 1
-
+    board.piece *= -1
+    
     if board.turn_check_all():
         x, y = board.input_()
         board.set_(x, y)
