@@ -1,7 +1,7 @@
 class Board:
     EDGE = 8
     WIN_REACH = 3
-    PIECE = ("-", "○", "●")
+    PIECE = (".", "○", "●")
     WHITE = 1
     BLACK = -1
     EMPTY = 0
@@ -164,7 +164,7 @@ while True:
     
     turn += 1
     board.piece *= -1
-    
+
     if board.turn_check_all():
         x, y = board.input_()
         board.set_(x, y)
