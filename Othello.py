@@ -14,8 +14,7 @@ class Board:
         self.grid_data[3][3], self.grid_data[4][4] = self.BLACK, self.BLACK
         self.grid_data[4][3], self.grid_data[3][4] = self.WHITE, self.WHITE
         self.piece = -1
-
-            
+    
 
     def set_(self, x, y):
         self.grid_data[y][x] = self.piece
@@ -81,6 +80,8 @@ class Board:
         return piece_count, white_count, black_count
 
 
+
+
 class TUIBoard(Board):
     def show(self):
 
@@ -96,6 +97,7 @@ class TUIBoard(Board):
             for j in range(self.EDGE):
                 print(self.PIECE[self.grid_data[i][j]], end = " ")
             print()
+
 
     def input_(self):
 
@@ -144,6 +146,7 @@ class TUIBoard(Board):
             else:
                 return x, y
 
+
     def pass_(self):
         self.show()
         print("エンターでパス。")
@@ -157,6 +160,8 @@ class TUIBoard(Board):
 
 
         
+
+
 board = TUIBoard()
 turn = 0
 while True:
