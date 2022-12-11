@@ -125,10 +125,10 @@ print("\n~~ Player's turn ~~\n")
 game.show_player_turn()
 bust = False
 while True:
+    player_score = game.player_score_count()
     if game.input_():
         game.pass_player()
         game.show_player_turn()
-        player_score = game.player_score_count()
         if player_score > 20:
             bust = True
             print("\nBust!")
@@ -139,10 +139,10 @@ while True:
 print("\n~~ Dealer's turn ~~\n")
 game.show_dealer_turn()
 while True:
+    dealer_score = game.dealer_score_count()
     if game.input_():
         game.pass_dealer()
         game.show_dealer_turn()
-        dealer_score = game.dealer_score_count()
         if dealer_score > 21:
             print("Bust!")
             break
