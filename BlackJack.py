@@ -1,14 +1,25 @@
 import random
 
+class Game:
+    cards = [["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] for _ in range(4)]
+    player = []
+    show_cards = ""
 
-cards_number = [["A", "2", "3", "4", "5", "6", "7", "8", "9", "J", "Q", "K"] for _ in range(4)]
-player = []
-show_cards = ""
+    def pass_(self):
+        while True:
+            sort = random.randint(0,3)
+            num = random.randint(0,12)
 
+            if self.cards[sort][num] != "":
+                break
+        
+        self.player.append(self.cards[sort][num])
+        self.cards[sort][num] = ""
 
-for _ in range(2):
-    player.append(cards_number[random.randint(0, 3)][random.randint(0,12)])
+    def show(self):
+        self.show_cards = (" ".join(self.player))
+    
 
-
-show_cards = (" ".join(player))
-print(show_cards)
+game = Game
+game.pass_()
+game.show()
