@@ -6,11 +6,8 @@ class Game:
     score_10 = ["10", "J", "Q", "K"]
     player_nums = []
     player_sorts = []
-    player_score = 0
     dealer_nums = []
     dealer_sorts = []
-    dealer_score = 0
-    A_in = False
 
 
     def pic_card(self):
@@ -36,25 +33,37 @@ class Game:
 
 
     def player_score_count(self):
+        player_score = 0
+        A_in_player = 0
         for i in range(len(self.player_nums)):
             if self.player_nums[i] == "A":
-                self.player_score += 1
-                self.A_in = True
+                player_score += 1
+                A_in_player += 1
             elif self.player_nums[i] in self.score_10:
-                self.player_score += 10
+                player_score += 10
             else:
-                self.player_score += int(self.player_nums[i])
+                player_score += int(self.player_nums[i])
+        for i in range(A_in_player):
+            if player_score <= 11:
+                player_score += 10
+        return player_score
 
 
     def dealer_score_count(self):
+        dealer_score = 0
+        A_in_dealer = 0
         for i in range(len(self.dealer_nums)):
             if self.dealer_nums[i] == "A":
-                self.dealer_score += 1
-                self.A_in = True
+                dealer_score += 1
+                A_in_dealer += 1
             elif self.dealer_nums[i] in self.score_10:
-                self.dealer_score += 10
+                dealer_score += 10
             else:
-                self.dealer_score += int(self.dealer_nums[i])
+                dealer_score += int(self.dealer_nums[i])
+        for i in range(A_in_dealer):
+            if dealer_score <= 11:
+                dealer_score += 10
+        return dealer_score
 
 
     def ready(self):
@@ -119,8 +128,8 @@ while True:
     if game.input_():
         game.pass_player()
         game.show_player_turn()
-        game.player_score_count()
-        if game.player_score > 20:
+        player_score = game.player_score_count()
+        if player_score > 20:
             bust = True
             print("\nBust!")
             input("Enter to next")
@@ -133,16 +142,16 @@ while True:
     if game.input_():
         game.pass_dealer()
         game.show_dealer_turn()
-        game.dealer_score_count()
-        if game.dealer_score > 20:
+        dealer_score = game.dealer_score_count()
+        if dealer_score > 21:
             print("Bust!")
             break
     else:
         break
 
-if bust or game.dealer_score > game.player_score:
+if bust or dealer_score > player_score:
     print("Dealer Win")
-elif game.player_score == game.dealer_score:
+elif player_score == dealer_score:
     print("Even")
 else:
     print("Player Win")
