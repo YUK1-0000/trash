@@ -66,10 +66,10 @@ class Game:
     def input_(self):
         while True:
             input_ = input("\nHit or Stand\n").upper()
-            if input_ in ["HIT"]:
+            if input_ == "HIT":
                 print()
                 return True
-            elif input_ in ["STAND"]:
+            elif input_ == "STAND":
                 print()
                 return False
 
