@@ -5,9 +5,9 @@ class Game:
     CARDS_SORT = ["♥", "♠", "♦", "☘"]
     SCORE_10 = ["10", "J", "Q", "K"]
     player_nums = []
-    player_sorts = []
+    player_sorts = player_nums
     dealer_nums = []
-    dealer_sorts = []
+    dealer_sorts = dealer_nums
 
 
     def pic_card(self):
