@@ -75,9 +75,9 @@ class Game:
             self.pass_dealer()
         
 
-    def input_(self, n):
+    def input_(self):
         while True:
-            input_ = input(f"\nPlayer{n+1} Hit or Stand\n").upper()
+            input_ = input(f"\nPlayer number + Hit or Stand\n").upper()
             if input_ == "HIT":
                 print()
                 return True
@@ -126,47 +126,7 @@ game = UI()
 game.ready()
 
 print("\n~~ Player's turn ~~\n")
-game.player_turn_ui()
 player_bust = False
 dealer_bust = False
-for i in range(game.player):
-    while True:    
-        player_score = game.player_score_count(i)
-        if player_score == 21:
-            print("\nBlackJack!")
-            input("Enter to next")
-            break
-        elif player_score > 21:
-            player_bust = True
-            print("\nBust!")
-            input("Enter to next")
-            break
-        for j in range(game.player):
-            if game.input_(i):
-                game.pass_player(i)
-                game.player_turn_ui()
-            else:
-                break
-print("\n~~ Dealer's turn ~~\n")
-game.dealer_turn_ui()
-while True:
-    dealer_score = game.dealer_score_count()
-    if dealer_score == 21:
-        print("\nBlackJack!")
-        break
-    elif dealer_score > 21:
-        dealer_bust = True
-        print("\nBust!")
-        break
-    if game.input_():
-        game.pass_dealer()
-        game.dealer_turn_ui()
-    else:
-        break
 
-if player_bust or (not dealer_bust and dealer_score > player_score):
-    print("Dealer Win")
-elif player_score == dealer_score:
-    print("Even")    
-else:
-    print("Player Win")
+game.player_turn_ui()
