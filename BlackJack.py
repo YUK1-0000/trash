@@ -5,7 +5,11 @@ class Game:
     CARDS_NUM = [["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] for _ in range(4)]
     CARDS_SORT = ["♥", "♠", "♦", "☘"]
     SCORE_10 = ["10", "J", "Q", "K"]
-    player = 2
+    while True:
+        player = input("How many players? (1~8)")
+        if player in [str(i+1) for i in range(8)]:
+            player = int(player)
+            break
     player_num_list = [i for i in range(player)]
     player_nums = [[] for _ in range(player)]
     player_sorts = [[] for _ in range(player)]
@@ -53,20 +57,20 @@ class Game:
 
 
     def dealer_score_count(self):
-        dealer_score = 0
+        score = 0
         A_in_dealer = 0
         for i in range(len(self.dealer_nums)):
             if self.dealer_nums[i] == "A":
-                dealer_score += 1
+                score += 1
                 A_in_dealer += 1
             elif self.dealer_nums[i] in self.SCORE_10:
-                dealer_score += 10
+                score += 10
             else:
-                dealer_score += int(self.dealer_nums[i])
+                score += int(self.dealer_nums[i])
         for i in range(A_in_dealer):
-            if dealer_score <= 11:
-                dealer_score += 10
-        return dealer_score
+            if score <= 11:
+                score += 10
+        return score
 
 
     def ready(self):
@@ -76,9 +80,10 @@ class Game:
             self.pass_dealer()
         
 
-    def input_(self, done):
+    def player_input(self, done):
         while True:
-            input_ = input(f"\nPlayer number + Hit or Stand\n").upper()
+            game.player_turn_table()            
+            input_ = input(f"Player number + Hit or Stand\n").upper()
             if input_ == "":
                 input_ += " "
             if input_[0] in done:
@@ -92,25 +97,44 @@ class Game:
                     return False, n
         
 
-    def player_turn(self):
-        done = []
-        print("\n~~ Player's turn ~~\n")
+    def dealer_input(self):
         while True:
-            game.player_turn_table()
-            for i in range(self.player):
-                score = self.player_score_count(i)
-                if score == 21:
-                    print(f"\nPlayer{i+1} BlackJack")
-                elif score > 21:
-                    print(f"\nPlayer{i+1} Bust")
+            game.dealer_turn_table()            
+            input_ = input(f"\nHit or Stand\n").upper()
+            match input_:
+                case "HIT":
+                    self.pass_dealer
+                    game.dealer_turn_table()
+                case "STAND":
+                    break
+
+
+
+    def player_turn(self):
+        continue_ = True
+        done = []
+        print("\n~~ Player's turn ~~")
+        while continue_:
             for i in range(self.player):
                 if self.player_num_list[i] not in done:
                     break
-            hit, n = self.input_(done)
+            hit, n = self.player_input(done)
             if hit:
                 self.pass_player(n)
             else:
                 done.append(str(n))
+            continue_ = False
+            for i in range(self.player):
+                if str(i) not in done:
+                    continue_ = True
+                    break
+
+    
+    def dealer_turn(self):
+        print("\n~~ Dealer's turn ~~\n")
+        while True:
+             self.dealer_input()
+             break
 
 
 class UI(Game):
@@ -134,11 +158,12 @@ class UI(Game):
         print()
 
     def player_turn_table(self):
-        print("Dealer", end = "  ")
+        print("\nDealer", end = "  ")
         self.dealer_hole()
         for i in range(self.player):
             print(f"Player{i+1}", end = " ")
             self.player_turn_show(i)
+        print()
 
 
     def dealer_turn_table(self):
@@ -149,10 +174,24 @@ class UI(Game):
         self.dealer_turn_show()
 
 
+    def result(self):
+        print()
+        dealer_score = self.dealer_score_count()
+        for i in range(self.player):
+            player_score = self.player_score_count(i)
+            print(f"Player{i+1}", end = " ")
+            if player_score > 21:
+                print("Lose")
+            elif player_score == dealer_score:
+                print("Even")
+            elif dealer_score > 21:
+                print("Win")
+            elif player_score > dealer_score:
+                print("Win")
+            else:
+                print("Lose")
 game = UI()
-
-
-
 game.ready()
 game.player_turn()
-game.player_turn_table()
+game.dealer_turn()
+game.result()
