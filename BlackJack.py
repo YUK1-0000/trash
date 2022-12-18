@@ -1,20 +1,20 @@
 import random
 
 class Game:
-
-    CARDS_NUM = [["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] for _ in range(4)]
-    CARDS_SORT = ["♥", "♠", "♦", "☘"]
-    SCORE_10 = ["10", "J", "Q", "K"]
-    while True:
-        player = input("How many players? (1~8)\n")
-        if player in [str(i+1) for i in range(8)]:
-            player = int(player)
-            break
-    player_num_list = [i for i in range(player)]
-    player_nums = [[] for _ in range(player)]
-    player_sorts = [[] for _ in range(player)]
-    dealer_nums = []
-    dealer_sorts = []
+    def __init__(self):
+        self.CARDS_NUM = [["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] for _ in range(4)]
+        self.CARDS_SORT = ["♥", "♠", "♦", "☘"]
+        self.SCORE_10 = ["10", "J", "Q", "K"]
+        while True:
+            self.player = input("How many players? (1~8)\n")
+            if self.player in [str(i+1) for i in range(8)]:
+                self.player = int(self.player)
+                break
+        self.player_num_list = [i for i in range(self.player)]
+        self.player_nums = [[] for _ in range(self.player)]
+        self.player_sorts = [[] for _ in range(self.player)]
+        self.dealer_nums = []
+        self.dealer_sorts = []
 
 
     def pic_card(self):
