@@ -6,7 +6,7 @@ class Game:
     CARDS_SORT = ["♥", "♠", "♦", "☘"]
     SCORE_10 = ["10", "J", "Q", "K"]
     while True:
-        player = input("How many players? (1~8)")
+        player = input("How many players? (1~8)\n")
         if player in [str(i+1) for i in range(8)]:
             player = int(player)
             break
