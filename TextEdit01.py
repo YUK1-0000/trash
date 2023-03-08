@@ -1,21 +1,28 @@
 from tkinter import *
-from tkinter import ttk, messagebox
-import sys
+from tkinter import messagebox
+from tkinter.scrolledtext import ScrolledText
+import sys, webbrowser
 
 class TextEdit:
     def __init__(self, root):
         root.title(self.__class__.__name__)
-        root.geometry('300x50')
+        root.geometry('500x300')
 
-        root.option_add("*tearoff", FALSE)
+        root.option_add("*tearOff", FALSE)
         menu = Menu()
+        root["menu"] = menu
+
         menuFile = Menu()
-        menu.add_cascade(menu=menuFile, label="ファイル(F)")
-        menuFile.add_command(label="終了(X)",command=self.menuFileExit)
+        menu.add_cascade(menu=menuFile, label="ファイル(F)", underline=5)
+        menuFile.add_command(label="終了(X)", underline=3 ,command=self.menuFileExit)
+
         menuHelp = Menu()
         menu.add_cascade(menu=menuHelp, label="ヘルプ(H)", underline=4)
         menuHelp.add_command(label="バージョン情報(V)", underline=8, command=self.menuHelpVersion)
-        root["menu"] = menu
+        menuHelp.add_command(label="Webサイトを開く(W)", underline=10, command=self.menuHelpOpenWeb)
+
+        text = ScrolledText()
+        text.pack(expand=1, fill=BOTH)
 
     def menuFileExit(self):
         root.destroy()
@@ -26,6 +33,9 @@ class TextEdit:
         s += "@2021 Hideo Harada\n"
         s += "with Python " + sys.version
         messagebox.showinfo(self.__class__.__name__, s)
+
+    def menuHelpOpenWeb(self):
+        webbrowser.open("https://info.nikkeibp.co.jp/media/NSW/")
 
 root = Tk()
 TextEdit(root)
