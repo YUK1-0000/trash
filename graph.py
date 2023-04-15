@@ -1,20 +1,14 @@
-r = 50
-dot = "."
-space = " "
+DOT = "."
+SPACE = " "
+n = 50
 
-a, b, c, d = map(int, input().split())
+def f(x):
+    return x**3+10
 
-for y in reversed(range(r)):
-    for x in map(lambda i: i/2, range(r*2)):
-        print(dot if y-2 <= a*x**3 + b*x**2 + c*x + d <= y+2 else space, end="")
-    print()
-    
-'''
-def tdf(x) -> int:
-    return a*x**2+b*x+c
+def graph():
+    for y in reversed(range(n)):
+        for x in map(lambda i:i/2, range(n*2)):
+            print(DOT if -1<=f(x)-y<=1 else SPACE, end="")
+        print()
 
-x = r
-while x <= 0:
-    x -= 0.1
-_    tdf(x)
-    print(dot if r  else space, end="")'''
+graph()

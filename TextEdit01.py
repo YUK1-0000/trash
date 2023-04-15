@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter.scrolledtext import ScrolledText
-import sys, webbrowser
+import sys, webbrowser, configparser
 
 class TextEdit:
     def __init__(self, root):
@@ -25,8 +25,12 @@ class TextEdit:
         text.pack(expand=1, fill=BOTH)
 
     def menuFileExit(self):
+        cp = configparser.ConfigParser()
+        cp = ["Client"] = {"Height" : str(root.winfo_height()), "Width" : str(root.winfo_width())}
+        with open(self.__class__.__name__ + ".ini", "w") as f:
+            cp.write(f)
         root.destroy()
-
+        
     def menuHelpVersion(self):
         s = self.__class__.__name__
         s += "Version 0.01(2021/03/10)\n"
