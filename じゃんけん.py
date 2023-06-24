@@ -2,8 +2,6 @@ import random
 
 
 HAND_TYPES = ("グー","チョキ","パー")
-my_hand = ""
-cpu_hand = ""
 
 
 while True:
