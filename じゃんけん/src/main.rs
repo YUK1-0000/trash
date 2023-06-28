@@ -15,9 +15,9 @@ fn main() {
         let mut retry = String::new();
 
         println!("\n1: {} 2: {} 3: {}", HANDS[0], HANDS[1], HANDS[2]);
-        //stdin().read_line(&mut s).unwrap();
+        stdin().read_line(&mut s).unwrap();
 
-        //let i = (s.replace("\n", "").parse::<u8>().unwrap() - 1) as usize;
+        let i = (s.replace("\n", "").parse::<u8>().unwrap() - 1) as usize;
         let i = 0;
         let j = loop {
             let tmp = (rand::thread_rng().gen::<f32>() * 3.).floor() as usize;
@@ -49,10 +49,10 @@ fn main() {
             println!("  {}連勝", win_streak)
         }
         println!("\n1: もう一回 2: やめる");
-        /*stdin().read_line(&mut retry).unwrap();
+        stdin().read_line(&mut retry).unwrap();
 
         if retry.chars().next().unwrap().to_string() != "1" {
             break;
-        };*/
+        };
     }
 }
