@@ -1,1 +1,1 @@
-/workspaces/AAAAA/じゃんけん/target/debug/じゃんけん: /workspaces/AAAAA/じゃんけん/src/main.rs
+/workspaces/trash/じゃんけん/target/debug/じゃんけん: /workspaces/trash/じゃんけん/src/main.rs
