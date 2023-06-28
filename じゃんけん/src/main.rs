@@ -16,41 +16,39 @@ fn main() {
         println!("\n1: {} 2: {} 3: {}", HANDS[0], HANDS[1], HANDS[2]);
         stdin().read_line(&mut s).unwrap();
 
-        let i = (s.replace("\n", "").parse::<u8>().unwrap() - 1) as usize;
+        let i = s[..s.len()-1].parse::<i8>().unwrap() - 1;
         let j = loop {
-            let tmp = (rand::thread_rng().gen::<f32>() * 3.).floor() as usize;
-            if tmp != 3 {
-                break tmp
-            };
+            let tmp = (rand::thread_rng().gen::<f32>() * 3.).floor() as i8;
+            if tmp != 3 { break tmp; };
         };
 
-        let my_hand = HANDS[i];
-        let cpu_hand = HANDS[j];
+        let my_hand = HANDS[i as usize];
+        let cpu_hand = HANDS[j as usize];
 
         println!("\nYou: {}\nCPU: {}\n", my_hand, cpu_hand);
 
-        if j as i8 - 1 == i as i8 {
+        if j - 1 == i {
             println!("勝ち！");
             win_streak += 1;
-            win += 1
-        } else if j as i8 - 2 == i as i8 {
+            win += 1;
+        } else if j - 2 == i {
             println!("負け！");
             win_streak = 0;
-            lose += 1
+            lose += 1;
         } else {
             println!("あいこ！");
-            continue
+            continue;
         };
 
         print!("\n{}勝{}敗", win, lose);
         if win_streak > 1 {
-            println!("  {}連勝", win_streak)
-        }
+            println!("  {}連勝", win_streak);
+        };
         println!("\n1: もう一回 2: やめる");
         stdin().read_line(&mut retry).unwrap();
 
         if retry.chars().next().unwrap().to_string() != "1" {
             break;
         };
-    }
+    };
 }
