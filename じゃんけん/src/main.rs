@@ -8,7 +8,6 @@ fn main() {
     let mut win = 0;
     let mut lose = 0;
     let mut win_streak = 0;
-    let mut max_win_streak = 0;
 
     loop {
         let mut s = String::new();
@@ -18,7 +17,6 @@ fn main() {
         stdin().read_line(&mut s).unwrap();
 
         let i = (s.replace("\n", "").parse::<u8>().unwrap() - 1) as usize;
-        let i = 0;
         let j = loop {
             let tmp = (rand::thread_rng().gen::<f32>() * 3.).floor() as usize;
             if tmp != 3 {
